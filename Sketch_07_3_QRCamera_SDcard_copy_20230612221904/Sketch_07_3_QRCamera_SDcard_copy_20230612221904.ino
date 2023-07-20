@@ -92,6 +92,7 @@ int cameraSetup(void) {
     config.grab_mode = CAMERA_GRAB_LATEST;
   } else {
     // Limit the frame size when PSRAM is not available
+    Serial.println("No PSRAM available!");
     config.frame_size = FRAMESIZE_SVGA;
     config.fb_location = CAMERA_FB_IN_DRAM;
   }

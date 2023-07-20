@@ -5,10 +5,10 @@
 
 #define WIFI_SSID "Chocos"
 #define WIFI_PASSWORD "titos3641"
-#define WEBHOOK_URL "https//your-url:8080/endpoint"
-#define DOOR_RELAY_PIN 12
+#define WEBHOOK_URL "https//localhost:8080/endpoint"
+#define DOOR_RELAY_PIN 0
 
-ESP32QRCodeReader reader(CAMERA_MODEL_ESP_EYE);
+ESP32QRCodeReader reader(CAMERA_MODEL_ESP32S3_EYE);
 struct QRCodeData qrCodeData;
 bool isConnected = false;
 
@@ -30,6 +30,7 @@ bool connectWifi()
   }
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("Connecting to WiFi...");
   int maxRetries = 10;
   while (WiFi.status() != WL_CONNECTED)
   {
@@ -43,6 +44,8 @@ bool connectWifi()
   }
   Serial.println("");
   Serial.println("WiFi connected");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
   return true;
 }
 
@@ -92,6 +95,7 @@ void loop()
   {
     isConnected = connected;
   }
+  //Serial.println("Ready to read codes");
   if (reader.receiveQrCode(&qrCodeData, 100))
   {
     Serial.println("Found QRCode");
